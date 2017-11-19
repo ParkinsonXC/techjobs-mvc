@@ -29,7 +29,7 @@ public class ListController {
     @RequestMapping(value = "")
     public String list(Model model) {
 
-        model.addAttribute("columns", columnChoices);
+        model.addAttribute("columns", columnChoices); //How you pass info to the html file
 
         return "list";
     }

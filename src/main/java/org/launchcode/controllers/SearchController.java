@@ -28,6 +28,21 @@ public class SearchController {
     @RequestMapping(value="results")
     public String results(Model model, @RequestParam String searchType, @RequestParam String searchTerm){
 
+        if(searchType.equals("all")){
+            ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
+            Integer resultSize = jobs.size();//Results found header
+            String results =resultSize.toString() + " result(s) found"; //Results found header
+            String newSearch = searchTerm; //Used to save the search field
+
+            model.addAttribute("columns", ListController.columnChoices);
+            model.addAttribute("jobs", jobs);
+            model.addAttribute("results", results);
+            model.addAttribute("newSearch", newSearch);
+
+            return "search";
+
+        } else {
+
         ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         Integer resultSize = jobs.size();//Results found header
         String results =resultSize.toString() + " result(s) found"; //Results found header
@@ -39,6 +54,7 @@ public class SearchController {
         model.addAttribute("newSearch", newSearch);
 
         return "search";
-    }
+        }
 
+    }
 }
